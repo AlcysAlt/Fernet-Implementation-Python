@@ -5,13 +5,16 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import secrets
 
+#Allows for quick encoding of UTF-8 to bytes, used to prepare strings for encryption
 def encode(data):
     data = data.encode("utf-8")
     return data
 
+#Allows for quick decoding of UTF-8 to bytes, used to prepare strings for encryption
 def decode(data):
     data = data.decode("utf-8")
     return data
+
 #Generates Salt, can be modified if needed. 
 #The generated salt needs to be stored somewhere accessible (e.g. database), as it's used to generate the key.
 def generateSalt():
@@ -38,7 +41,6 @@ def generateUserKey(password, salt):
     except:
         print("Error: Couldn't generate key...\n")
     
-
 #Allows for encryption of data with the data key, allowing for safe storage of data.
 #Allows for encryption of data key with the user key, this allows for safe storage of the data key. 
 #Takes bytes as input.
@@ -60,12 +62,13 @@ def decrypt(data, key):
     except:
         print("Error: Couldn't decrypt data...\n")
 
-
+#Tests
 def tests():
     password = 'password'
     data = encode('data 123\n 123')
     print(data)
 
+#Main interface function
 def interface():
     
     password = 'password'
@@ -84,7 +87,5 @@ def interface():
 
     
 
-
-    
-
+#Main
 interface()
