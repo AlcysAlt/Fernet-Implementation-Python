@@ -75,7 +75,7 @@ def interface():
         choice = input("Please select option...\nEncrypt - 1\nDecrypt - 2\n")
         if "1" in choice:
             salt = generateSalt(128)
-            password = 'password'
+            password = input("password:")
             data = encode('data 123\ndata123')
             dataKey = generateDataKey()
             data = encrypt(data, dataKey)
