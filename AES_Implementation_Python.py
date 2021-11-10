@@ -71,19 +71,32 @@ def tests():
 #Main interface function
 def interface():
     
-    password = 'password'
-    data = encode('data 123\ndata123')
-    salt = generateSalt(128)
-    dataKey = generateDataKey()
+    while 0 != 1:
+        choice = input("Please select option...\nEncrypt - 1\nDecrypt - 2\n")
+        if "1" in choice:
+            salt = generateSalt(128)
+            password = 'password'
+            data = encode('data 123\ndata123')
+            dataKey = generateDataKey()
+            data = encrypt(data, dataKey)
+            dataKey = encrypt(dataKey, generateUserKey(password, salt))
+            print("Here is the decrypted data:\n",decode(data))
+            #print(password)
+            #print(salt)
+        elif "2" in choice:
+            data = decrypt(data, decrypt(dataKey, generateUserKey(password, salt)))
+            print("Here is the decrypted data:\n",decode(data))
+            #print(password)
+            #print(salt)
   
-    userKey = generateUserKey(password, salt)
-    data = encrypt(data, dataKey)
-    dataKey = encrypt(dataKey, userKey)
-    userKey = generateUserKey(password, salt)
+    
+    
+    
+    
     #userKey = generateUserKey(password, input("Please enter salt"))
-    dataKey = decrypt(dataKey, userKey)
-    data = decrypt(data, dataKey)
-    print(decode(data))
+    
+    
+    
     
 
 
