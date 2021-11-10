@@ -72,28 +72,38 @@ def tests():
 def interface():
     
     while 0 != 1:
-        choice = input("Please select option...\nEncrypt - 1\nDecrypt - 2\n")
+        choice = input("Please select option...\nEncrypt - 1\nDecrypt - 2\nChange Password - 3\n")
         if "1" in choice:
-            salt = generateSalt(128)
-            password = 'password'
-            data = encode('data 123\ndata123')
-            dataKey = generateDataKey()
-            data = encrypt(data, dataKey)
-            dataKey = encrypt(dataKey, generateUserKey(password, salt))
-            print("Here is the decrypted data:\n",decode(data))
+            try:
+                salt = generateSalt(128)
+                password = input("Enter your password to decrypt: ")
+                data = encode(input("Enter data for encryption: "))
+                dataKey = generateDataKey()
+                data = encrypt(data, dataKey)
+                print("Here is the decrypted data:\n",decode(data))
+                dataKey = encrypt(dataKey, generateUserKey(password, salt))
+            except:
+                print("Error: Encryption couldn't be completed...\n")
             #print(password)
             #print(salt)
         elif "2" in choice:
-            data = decrypt(data, decrypt(dataKey, generateUserKey(password, salt)))
-            print("Here is the decrypted data:\n",decode(data))
-            #print(password)
-            #print(salt)
-  
-    
-    
-    
-    
-    #userKey = generateUserKey(password, input("Please enter salt"))
+            try:
+                password = input("Enter your password to decrypt: ")
+                print("Here is the decrypted data:\n",decode(decrypt(data, decrypt(dataKey, generateUserKey(password, salt)))))
+            except:
+                print("Error: Incorrect Password\n")
+        elif "3" in choice:
+            loop = True
+            while loop == True:
+                try:
+                    dataKey = decrypt(dataKey, generateUserKey(input("Enter your password to decrypt: "), salt))
+                except InvalidToken:
+                    print("Error: Incorrect Password\n")
+
+                else:
+                    dataKey = encrypt(dataKey, generateUserKey(input("Enter your new password: "), salt))
+            
+               
     
     
     
