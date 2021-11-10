@@ -18,7 +18,7 @@ def decode(data):
 #Generates Salt, can be modified if needed. 
 #The generated salt needs to be stored somewhere accessible (e.g. database), as it's used to generate the key.
 def generateSalt(bytes):
-    salt = secrets.token_hex(int(bytes))
+    salt = secrets.token_bytes(int(bytes))
     return salt
 
 #Generates a random data key used to encrypt user data.
@@ -64,13 +64,9 @@ def decrypt(data, key):
 
 #Tests
 def tests():
-    salt = generateSalt(16)
-    f = open("encryptedfile.crypt", "x")
-    f.write(salt.decode("utf-8") + "\n")
-    f.close
-    f2 = open("encryptedfile.crypt", "r")
-    f2.read()
-    f2.close
+    password = 'password'
+    data = encode('data 123\n 123')
+    print(data)
 
 #Main interface function
 def interface():
@@ -84,16 +80,13 @@ def interface():
     data = encrypt(data, dataKey)
     print(decode(data))
     dataKey = encrypt(dataKey, userKey)
+    userKey = generateUserKey(password, salt)
     print(salt)
-    
-    
-
-
     #userKey = generateUserKey(password, input("Please enter salt"))
     dataKey = decrypt(dataKey, userKey)
     data = decrypt(data, dataKey)
     print(decode(data))
-    print(salt)
+    
 
 
     
