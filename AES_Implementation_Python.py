@@ -60,7 +60,8 @@ def decrypt(data, key):
         plainText = fernet.decrypt(data)
         return plainText
     except:
-        print("Error: Couldn't decrypt data...\n")
+        raise
+        
 
 #Tests
 def tests():
@@ -93,24 +94,13 @@ def interface():
             except:
                 print("Error: Incorrect Password\n")
         elif "3" in choice:
-            loop = True
-            while loop == True:
-                try:
-                    dataKey = decrypt(dataKey, generateUserKey(input("Enter your password to decrypt: "), salt))
-                except InvalidToken:
-                    print("Error: Incorrect Password\n")
+            try:
+                password = input("Enter your password to decrypt: ")
+                tempDataKey = decrypt(dataKey, generateUserKey(password, salt))
+                tempData = decode(decrypt(data, decrypt(dataKey, generateUserKey(password, salt))))
+                password = input("Enter your new password: ")
+                dataKey = encrypt(tempDataKey,generateUserKey(password, salt))
+            except:
+                print("Error: Incorrect Password\n")
 
-                else:
-                    dataKey = encrypt(dataKey, generateUserKey(input("Enter your new password: "), salt))
-            
-               
-    
-    
-    
-    
-
-
-    
-
-#Main
 interface()
