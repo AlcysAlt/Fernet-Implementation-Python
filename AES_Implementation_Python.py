@@ -61,7 +61,10 @@ def decrypt(data, key):
         return plainText
     except:
         raise
-        
+def lengthTest(password):
+    while len(password) < 8:
+        password = input("Password too short, try again: ")
+    return password
 
 #Tests
 def tests():
