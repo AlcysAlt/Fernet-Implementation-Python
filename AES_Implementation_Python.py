@@ -93,8 +93,7 @@ def interface():
                 print("Here is the encrypted data:\n",decode(data))
             except:
                 print("Error: Encryption couldn't be completed...\n")
-            #print(password)
-            #print(salt)
+            
         elif choice == 2:
             try:
                 print("Here is the decrypted data:\n",decode(decrypt(data, decrypt(dataKey, generateUserKey(lengthTest(input("Enter your password to decrypt: ")), salt)))))
