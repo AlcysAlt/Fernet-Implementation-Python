@@ -74,29 +74,34 @@ def tests():
 
 #Main interface function
 def interface():
-    
     while 0 != 1:
-        choice = input("Please select option...\nEncrypt - 1\nDecrypt - 2\nChange Password - 3\n")
-        if "1" in choice:
+        choice = 0
+        while (3 < choice or choice < 1):
+            try:
+                choice = int(input("Please select option...\nEncrypt - 1\nDecrypt - 2\nChange Password - 3\n"))
+            except:
+                print("Error: Invalid Option\n")
+
+        if choice == 1:
             try:
                 salt = generateSalt(128)
-                password = lengthTest(input("Enter your password to decrypt: "))
+                
                 data = encode(input("Enter data for encryption: "))
                 dataKey = generateDataKey()
                 data = encrypt(data, dataKey)
-                print("Here is the decrypted data:\n",decode(data))
-                dataKey = encrypt(dataKey, generateUserKey(password, salt))
+                dataKey = encrypt(dataKey, generateUserKey(lengthTest(input("Enter your password to encrypt: ")), salt))
+                print("Here is the encrypted data:\n",decode(data))
             except:
                 print("Error: Encryption couldn't be completed...\n")
             #print(password)
             #print(salt)
-        elif "2" in choice:
+        elif choice == 2:
             try:
                 password = lengthTest(input("Enter your password to decrypt: "))
                 print("Here is the decrypted data:\n",decode(decrypt(data, decrypt(dataKey, generateUserKey(password, salt)))))
             except:
                 print("Error: Incorrect Password\n")
-        elif "3" in choice:
+        elif choice == 3:
             try:
                 tempDataKey = decrypt(dataKey, generateUserKey(input("Enter your password to decrypt: "), salt))
                 password = lengthTest(input("Enter your new password: "))
