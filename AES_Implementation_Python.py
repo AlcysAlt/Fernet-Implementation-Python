@@ -97,8 +97,7 @@ def interface():
             #print(salt)
         elif choice == 2:
             try:
-                password = lengthTest(input("Enter your password to decrypt: "))
-                print("Here is the decrypted data:\n",decode(decrypt(data, decrypt(dataKey, generateUserKey(password, salt)))))
+                print("Here is the decrypted data:\n",decode(decrypt(data, decrypt(dataKey, generateUserKey(lengthTest(input("Enter your password to decrypt: ")), salt)))))
             except:
                 print("Error: Incorrect Password\n")
         elif choice == 3:
