@@ -80,7 +80,7 @@ def interface():
         if "1" in choice:
             try:
                 salt = generateSalt(128)
-                password = input("Enter your password to decrypt: ")
+                password = lengthTest(input("Enter your password to decrypt: "))
                 data = encode(input("Enter data for encryption: "))
                 dataKey = generateDataKey()
                 data = encrypt(data, dataKey)
@@ -92,14 +92,14 @@ def interface():
             #print(salt)
         elif "2" in choice:
             try:
-                password = input("Enter your password to decrypt: ")
+                password = lengthTest(input("Enter your password to decrypt: "))
                 print("Here is the decrypted data:\n",decode(decrypt(data, decrypt(dataKey, generateUserKey(password, salt)))))
             except:
                 print("Error: Incorrect Password\n")
         elif "3" in choice:
             try:
                 tempDataKey = decrypt(dataKey, generateUserKey(input("Enter your password to decrypt: "), salt))
-                password = input("Enter your new password: ")
+                password = lengthTest(input("Enter your new password: "))
                 dataKey = encrypt(tempDataKey,generateUserKey(password, salt))
             except:
                 print("Error: Incorrect Password\n")
