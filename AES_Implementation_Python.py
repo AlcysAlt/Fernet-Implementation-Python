@@ -102,8 +102,7 @@ def interface():
         elif choice == 3:
             try:
                 tempDataKey = decrypt(dataKey, generateUserKey(input("Enter your password to decrypt: "), salt))
-                password = lengthTest(input("Enter your new password: "))
-                dataKey = encrypt(tempDataKey,generateUserKey(password, salt))
+                dataKey = encrypt(tempDataKey,generateUserKey(lengthTest(input("Enter your new password: ")), salt))
             except:
                 print("Error: Incorrect Password\n")
 
